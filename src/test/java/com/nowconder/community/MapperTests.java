@@ -4,8 +4,10 @@ package com.nowconder.community;
 
 
 import com.nowconder.community.dao.DiscussPostMapper;
+import com.nowconder.community.dao.LoginTicketMapper;
 import com.nowconder.community.dao.UserMapper;
 import com.nowconder.community.entity.DiscussPost;
+import com.nowconder.community.entity.LoginTicket;
 import com.nowconder.community.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +28,9 @@ public class MapperTests {
 
     @Autowired
     private DiscussPostMapper discussPostMapper;
+
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
     @Test
     public void testSelectUser() {
         User user = userMapper.selectById(101);
@@ -82,5 +87,35 @@ public class MapperTests {
         int rows=discussPostMapper.selectDiscussPostRows(0);
         System.out.println(rows);
 
+    }
+    @Test
+    public void testInsertLoginTicket(){
+        LoginTicket loginTicket=new LoginTicket();
+        loginTicket.setId(101);
+        loginTicket.setTicket("abc");
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis()+1000*60*10));
+        //loginTicketMapper.insertLoginTicket(loginTicket);
+        System.out.println("=============");
+        System.out.println(loginTicket);
+    }
+
+    @Test
+    public void testSelectLoginTicket(){
+        LoginTicket loginTicket=loginTicketMapper.selectByTicket("abc");
+        System.out.println("==========");
+        System.out.println(loginTicket);
+
+        loginTicketMapper.updateStatus("abc",1);
+        loginTicket=loginTicketMapper.selectByTicket("abc");
+        System.out.println(loginTicket);
+    }
+    @Test
+    public void myTest(){
+        System.out.println("=========");
+        System.out.println(new Date(System.currentTimeMillis()));
+        System.out.println(new Date(System.currentTimeMillis()+8640000));
+        System.out.println(new Date(System.currentTimeMillis()+8640000*100));
+        System.out.println("=========");
     }
 }
